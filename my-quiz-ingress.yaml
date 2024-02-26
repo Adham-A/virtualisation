@@ -20,7 +20,7 @@ metadata:
   namespace: my-quiz-namespace
   annotations:
     kubernetes.io/ingress.class: traefik
-    traefik.ingress.kubernetes.io/router.middlewares: my-quiz-strip-prefix
+    traefik.ingress.kubernetes.io/router.middlewares: my-quiz-namespace-my-quiz-strip-prefix@kubernetescrd
 spec:
   rules:
   - http:
