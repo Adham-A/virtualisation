@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-quiz-ingress
+  namespace: my-quiz-namespace
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: my-quiz-ui
+            port:
+              number: 80
+      - path: /api
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: my-quiz-api
+            port:
+              number: 5000

@@ -6,6 +6,8 @@ from flask_cors import CORS
 from jwt_utils import build_token
 from auth import jwt_required
 from db import get_cursor
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+from werkzeug.wrappers import Response
 
 # Imports routes
 from questions_blueprint import questions_bp
@@ -14,6 +16,12 @@ from admins_blueprint import admins_bp
 # End of imports
 
 app = Flask(__name__)
+
+app.wsgi_app = DispatcherMiddleware(
+    Response('Not Found', status=404),
+    {'/api': app.wsgi_app}
+)
+
 app.register_blueprint(questions_bp)
 app.register_blueprint(participations_bp)
 app.register_blueprint(admins_bp)
