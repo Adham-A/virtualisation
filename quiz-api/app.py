@@ -17,10 +17,10 @@ from admins_blueprint import admins_bp
 
 app = Flask(__name__)
 
-app.wsgi_app = DispatcherMiddleware(
-    Response('Not Found', status=404),
-    {'/api': app.wsgi_app}
-)
+# app.wsgi_app = DispatcherMiddleware(
+#     Response('Not Found', status=404),
+#     {'/api': app.wsgi_app}
+# )
 
 app.register_blueprint(questions_bp)
 app.register_blueprint(participations_bp)
