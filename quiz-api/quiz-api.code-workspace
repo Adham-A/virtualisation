@@ -1,0 +1,37 @@
+{
+	"folders": [
+	  {
+		"path": "."
+	  }
+	],
+	"settings": {
+		"sqltools.connections": [
+			{
+				"previewLimit": 50,
+				"driver": "SQLite",
+				"name": "Quizz",
+				"database": "${workspaceFolder:quiz-api}/quiz.db"
+			}
+		],
+		"sqltools.useNodeRuntime": true
+	},
+	"launch": {
+	  "version": "0.2.0",
+	  "configurations": [
+		{
+		  "name": "Python: Flask",
+		  "type": "python",
+		  "request": "launch",
+		  "module": "flask",
+		  "env": {
+			"FLASK_APP": "app.py",
+			"FLASK_DEBUG": "1",
+			"FLASK_ENV": "development"
+		  },
+		  "args": ["run", "--no-debugger"],
+		  "jinja": true,
+		  "justMyCode": true
+		}
+	  ]
+	}
+  }

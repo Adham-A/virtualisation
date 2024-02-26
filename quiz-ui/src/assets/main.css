@@ -1,0 +1,72 @@
+@import './base.css';
+
+html,
+body {
+  background-color: #4a5173;
+  color: white;
+  height: 100%;
+  display: block !important;
+  font-family: 'South Park', 'Arial';
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+#app {
+  min-width: 100vw;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+  display: grid;
+  grid-template-rows: 1fr 9fr;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: #2e3de76c;
+  transition: 0.4s;
+}
+
+.questions-class {
+  width: 100%;
+  padding: 10px;
+  background-color: #7d95b1;
+  color: #1c1d57;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  margin: 1%;
+  text-align: center;
+  border-radius: 2em;
+}
+
+.main-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.error-icon {
+  font-size: 24px;
+  color: red;
+}
+
+/* South Park FONT */
+@font-face {
+  font-family: 'South Park';
+  src: url('fonts/south_park_custom.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Fallback font pour les accents RIP ☠ */
+@font-face {
+  font-family: 'SF Fedora';
+  src: url('fonts/SF fedora.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
