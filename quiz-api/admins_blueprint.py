@@ -37,7 +37,7 @@ def login():
     data = request.get_json()
     print(data)
     admin = Admin(data["username"], data["password"])
-    query = '''SELECT * FROM admins WHERE username=?'''
+    query = '''SELECT * FROM admins WHERE username=%s'''
     parameters = (admin.username,)
     result = get_one_from_db(query,parameters)
     print(result)

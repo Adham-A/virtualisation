@@ -35,10 +35,13 @@ def get_quizz_info():
     Returns:
         json: number of questions, score
     """
-    number_of_questions, = get_cursor().execute(
-        "SELECT count(*) as size from questions").fetchone()
-    participants = get_cursor().execute(
-        "SELECT nom, score FROM participations ORDER BY score DESC").fetchall()
+    cursor = get_cursor()
+    cursor.execute(
+        "SELECT count(*) as size from questions")
+    number_of_questions, = cursor.fetchone()
+    cursor.execute(
+        "SELECT nom, score FROM participations ORDER BY score DESC")
+    participants = cursor.fetchall()
     scores = [{'playerName': row[0], 'score': row[1]} for row in participants]
     return {"size": number_of_questions, "scores": scores}, 200
 

@@ -46,15 +46,17 @@ class Question:
         """
         if id_ is None:
             query = '''INSERT INTO questions (text, title, image, position)
-                    VALUES (?, ?, ?, ?)'''
+                    VALUES (%s, %s, %s, %s)'''
             parameters = (self.text, self.title, self.image, self.position)
         else:
             query = '''INSERT INTO questions (id, text, title, image, position)
-                    VALUES (?, ?, ?, ?, ?)'''
+                    VALUES (%s, %s, %s, %s, %s)'''
             parameters = (id_, self.text, self.title,
                           self.image, self.position)
 
         cursor.execute(query, parameters)
+        cursor.connection.commit()
+        
 
         self.id_ = cursor.lastrowid
         for possible_answer in self.possible_answers:
@@ -94,6 +96,8 @@ class PossibleAnswer:
             cursor (_type_): sqlite3 cursor
         """
         query = '''INSERT INTO possible_answers (question_id, text, is_correct)
-                   VALUES (?, ?, ?)'''
+                   VALUES (%s, %s, %s)'''
         cursor.execute(query, (self.question_id,
                        self.text, self.is_correct))
+        cursor.connection.commit()
+     

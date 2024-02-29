@@ -1,21 +1,21 @@
 """Handles database connection"""
-import sqlite3
+import psycopg2
 
 
 def get_cursor():
-    """Creates cursor to dabatase
+    """Creates cursor to database
 
     Returns:
-        sqlite3.Cursor: cursor
+        psycopg2.extensions.cursor: cursor
     """
     # create a connection
-    db_connection = sqlite3.connect("quiz.db")
-    # Ajoutes les foreign keys sinon cringe
-    db_connection.execute("PRAGMA foreign_keys = 1")
-
-    # set the sqlite connection in "manual transaction mode"
-    # (by default, all execute calls are performed in their own transactions, not what we want)
-    db_connection.isolation_level = None
+    db_connection = psycopg2.connect(
+        host="localhost",
+        port="5432",
+        database="base_database",
+        user="user",
+        password="root"
+    )
 
     return db_connection.cursor()
 
@@ -24,11 +24,11 @@ def get_one_from_db(query, params):
     """Get one element from db
 
     Args:
-        query (_type_): _description_
-        params (_type_): _description_
+        query (str): SQL query
+        params (tuple): query parameters
 
     Returns:
-        dict: nom_colomne → valeur
+        dict: column_name -> value
     """
     cursor = get_cursor()
     cursor.execute(query, params)
@@ -45,8 +45,8 @@ def get_multiple_from_db(query, params):
     """Get multiple from db
 
     Args:
-        query (_type_): _description_
-        params (_type_): _description_
+        query (str): SQL query
+        params (tuple): query parameters
 
     Returns:
         Tuple: rows, column_names

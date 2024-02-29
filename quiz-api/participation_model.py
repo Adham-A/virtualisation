@@ -1,5 +1,6 @@
 """This module handles participations and possible answers"""
 
+from psycopg2.extensions import cursor as PsycopgCursor
 
 class Participation:
     """This class handles participations for the quizz
@@ -20,15 +21,17 @@ class Participation:
             "score": self.score,
         }
 
-    def persist_to_db(self, cursor):
+
+
+    def persist_to_db(self, cursor: PsycopgCursor):
         """Persist to database
 
         Args:
-            cursor (_type_): sqlite3 cursor
+            cursor (psycopg2.cursor)
         """
         query = '''INSERT INTO participations (nom, score)
-                    VALUES (?, ?)'''
+                    VALUES (%s, %s)'''
         parameters = (self.nom, self.score)
         cursor.execute(query, parameters)
-
+        cursor.connection.commit()
         return self

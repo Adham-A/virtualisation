@@ -2,8 +2,7 @@
 
 
 class Admin:
-    """Serves as an ORM layer to load and save this model into the DB
-    """
+    """Serves as an ORM layer to load and save this model into the DB"""
 
     def __init__(self, username: str, password: str):
         self.username = username
@@ -26,9 +25,9 @@ class Admin:
         Args:
             cursor (_type_): sqlite3 cursor
         """
-        query = '''INSERT INTO admins (username, password)
-                    VALUES (?, ?)'''
+        query = """INSERT INTO admins (username, password)
+                    VALUES (%s, %s)"""
         parameters = (self.username, self.password)
         cursor.execute(query, parameters)
-
+        cursor.connection.commit()
         return self

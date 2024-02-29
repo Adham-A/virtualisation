@@ -16,7 +16,7 @@ def get_question_by_position():
     """
     position = request.args.get('position', None)
     question_dict = get_one_from_db(
-        "SELECT * from questions where position = ?", (position,))
+        "SELECT * from questions where position = %s", (position,))
 
     if not question_dict:
         return 'Question not found', 404
@@ -24,7 +24,7 @@ def get_question_by_position():
     question = Question(**question_dict)
 
     possible_answers_rows, column_names = get_multiple_from_db(
-        "SELECT * FROM possible_answers WHERE question_id = ?", (question.id_,))
+        "SELECT * FROM possible_answers WHERE question_id = %s", (question.id_,))
 
     question.possible_answers = [] if possible_answers_rows else None
 
@@ -48,7 +48,7 @@ def get_question_by_id(question_id: int):
         _type_: _description_
     """
     question_dict = get_one_from_db(
-        "SELECT * from questions where id = ?", (question_id,))
+        "SELECT * from questions where id = %s", (question_id,))
 
     if not question_dict:
         return 'Question not found', 404
@@ -57,7 +57,7 @@ def get_question_by_id(question_id: int):
     question = Question(**question_dict)
 
     possible_answers_rows, column_names = get_multiple_from_db(
-        "SELECT * FROM possible_answers WHERE question_id = ?", (question_id,))
+        "SELECT * FROM possible_answers WHERE question_id = %s", (question_id,))
 
     question.possible_answers = [] if possible_answers_rows else None
 
@@ -124,7 +124,7 @@ def add_question(question_id=None):
     # Select all questions
     cursor = get_cursor()
     cursor.execute(
-        "SELECT id, position FROM questions WHERE position >= ? ORDER BY position ASC",
+        "SELECT id, position FROM questions WHERE position >= %s ORDER BY position ASC",
         (new_position, ))
     rows = cursor.fetchall()
 
@@ -135,7 +135,7 @@ def add_question(question_id=None):
 
         # Update question's position
         cursor.execute(
-            "UPDATE questions SET position = ? WHERE id = ?", (position_futur, quest_id))
+            "UPDATE questions SET position = %s WHERE id = %s", (position_futur, quest_id))
 
     question_object.persist_to_db(get_cursor(), question_id)
 
@@ -177,10 +177,10 @@ def delete_question_by_id(question_id: int):
         _type_: _description_
     """
     position = get_one_from_db(
-        "SELECT position from questions where id = ?", (question_id,))
+        "SELECT position from questions where id = %s", (question_id,))
 
     cursor = get_cursor()
-    query = "DELETE FROM questions WHERE id = ?"
+    query = "DELETE FROM questions WHERE id = %s"
     cursor.execute(query, (question_id,))
     n_deleted = cursor.rowcount
 
@@ -189,7 +189,7 @@ def delete_question_by_id(question_id: int):
         position = position["position"]
         cursor = get_cursor()
         cursor.execute(
-            "SELECT id,position FROM questions WHERE position>=? ORDER BY position ASC",
+            "SELECT id,position FROM questions WHERE position>=%s ORDER BY position ASC",
             (position, ))
         rows = cursor.fetchall()
 
@@ -200,6 +200,6 @@ def delete_question_by_id(question_id: int):
 
             # Update question's position
             cursor.execute(
-                "UPDATE questions SET position = ? WHERE id = ?", (position_futur, quest_id))
+                "UPDATE questions SET position = %s WHERE id = %s", (position_futur, quest_id))
 
     return n_deleted
