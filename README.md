@@ -2,6 +2,28 @@
 
 Ce projet reprends un ancien projet de quizz dévelopée à l'ESIEE, il consiste en deux images docker qui sépare le frontend et le backend
 
+## Architecture
+
+```mermaid
+graph LR;
+    subgraph "Internet"
+        internet((Internet))
+    end
+    subgraph "Kubernetes Cluster"
+        ingressGateway[Traefik \n Ingress Gateway] -->|/| frontend[Quiz-ui \n Frontend Service]
+        ingressGateway -->|/api| middleware_strip_api[Traefik Middleware \n strips /api]
+        middleware_strip_api --> backend[Quiz-api \nBackend Service]
+        backend --> database[PGSQL \n Database Service]
+        database[PGSQL Database Service] --- persistentVolume[Persistent \n Volume]
+        subgraph "Quizz app"
+            frontend
+            backend
+            database
+        end
+    end
+    internet -->|*| ingressGateway
+```
+
 ## Prérequis
 
 Avant de commencer, assurez-vous d'avoir installé les outils suivants :
