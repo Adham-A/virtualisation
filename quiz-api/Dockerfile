@@ -1,6 +1,8 @@
 # Image de l'API basée sur une image python
 FROM python:3.9-alpine
 
+RUN apk add --no-cache postgresql-dev
+
 # Création et positionnement du répertoire par défaut dans le container
 WORKDIR /app
 

@@ -64,6 +64,10 @@ kubectl apply -f my-quiz-api-deployment.yaml
 kubectl apply -f my-quiz-ui-service.yaml
 kubectl apply -f my-quiz-api-service.yaml
 kubectl apply -f my-quiz-ingress.yaml
+kubectl apply -f my-quiz-postgres-pv.yaml
+kubectl apply -f my-quiz-postgres-pvc.yaml   
+kubectl apply -f my-quiz-postgres.yaml  
+kubectl apply -f my-quiz-postgres-service.yaml  
 ```
 
 ### Accès au service
@@ -74,7 +78,7 @@ Pour accéder au service, exécutez la commande suivante :
 minikube service traefik
 ```
 
-Exemple de sortie : 
+Exemple de sortie :
 
 ```bash
 |-----------|---------|-------------|------------------------|
@@ -85,4 +89,4 @@ Exemple de sortie :
 |-----------|---------|-------------|------------------------|
 ```
 
-Il suffit alors d'ouvrir l'un des deux URLs dans un navigateur, le premier est pour http et le second pour https.
+Il suffit alors d'ouvrir l'un des deux URLs dans un navigateur, le premier est en HTTP et le second en HTTPS.

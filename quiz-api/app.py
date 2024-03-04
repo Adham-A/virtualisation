@@ -5,7 +5,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from jwt_utils import build_token
 from auth import jwt_required
-from db import get_cursor
+from db import get_cursor, init_db
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.wrappers import Response
 
@@ -26,7 +26,7 @@ app.register_blueprint(questions_bp)
 app.register_blueprint(participations_bp)
 app.register_blueprint(admins_bp)
 CORS(app)
-
+init_db()
 
 @app.route('/quiz-info', methods=['GET'])
 def get_quizz_info():

@@ -1,6 +1,28 @@
 """Handles database connection"""
-import psycopg2
 
+import psycopg2
+from psycopg2 import sql
+
+
+def init_db():
+    cursor = get_cursor()
+
+    # Execute a query to check if the database is empty
+    cursor.execute(
+        "SELECT COUNT(*) FROM pg_catalog.pg_tables WHERE schemaname != 'pg_catalog' AND schemaname != 'information_schema';"
+    )
+    rows = cursor.fetchone()
+
+    # If the database is empty
+    if rows[0] == 0:
+        print("Database empty");
+        # Open and read the file
+        with open("south_park.sql", "r", encoding="utf-8") as f:
+            sql_script = f.read()
+        
+        # Execute the SQL script
+        cursor.execute(sql.SQL(sql_script))
+        cursor.connection.commit()
 
 def get_cursor():
     """Creates cursor to database
@@ -10,11 +32,12 @@ def get_cursor():
     """
     # create a connection
     db_connection = psycopg2.connect(
-        host="localhost",
+        host="postgresql-service.my-quiz-namespace.svc.cluster.local",
+        # host="localhost",
         port="5432",
         database="base_database",
         user="user",
-        password="root"
+        password="root",
     )
 
     return db_connection.cursor()

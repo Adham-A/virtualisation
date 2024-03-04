@@ -4,3 +4,7 @@ kubectl apply -f my-quiz-api-deployment.yaml
 kubectl apply -f my-quiz-ui-service.yaml
 kubectl apply -f my-quiz-api-service.yaml
 kubectl apply -f my-quiz-ingress.yaml
+kubectl apply -f my-quiz-postgres-pv.yaml
+kubectl apply -f my-quiz-postgres-pvc.yaml   
+kubectl apply -f my-quiz-postgres.yaml  
+kubectl apply -f my-quiz-postgres-service.yaml  
