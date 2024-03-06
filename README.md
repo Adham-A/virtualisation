@@ -1,6 +1,11 @@
 # Projet Virtualisation
 
-Ce projet reprends un ancien projet de quizz dévelopée à l'ESIEE, il consiste en deux images docker qui sépare le frontend et le backend
+Ce projet reprend un ancien projet de quiz dévelopé à l'ESIEE dans le cadre du cours développement frontend.
+Le quiz est séparé avec une API back en Django et le front est en Vue, chacun avec leur image docker respective.
+Pour les faire fonctionner avec kubernetes il a fallu modifier notamment le backend suite à une migration de sqlite vers Postgresql.
+
+Plus de détails sur les déploiements Kubernetes et le code sont disponible dans le rapport.
+Les quelques images de l'application sont disponibles dans le [rapport](Rapport.pdf).
 
 ## Architecture
 
@@ -15,7 +20,7 @@ graph LR;
         middleware_strip_api --> backend[Quiz-api \nBackend Service]
         backend --> database[PGSQL \n Database Service]
         database[PGSQL Database Service] --- persistentVolume[Persistent \n Volume]
-        subgraph "Quizz app"
+        subgraph "Quiz app"
             frontend
             backend
             database
